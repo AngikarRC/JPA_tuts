@@ -24,15 +24,28 @@ class JpaTutorialApplicationTests {
 	@Test
 	void testRepository() {
 		ProductEntity productEntity = ProductEntity.builder()
-				.sku("nestle234")
-				.title("Nestle Chocolate")
-				.price(BigDecimal.valueOf(23.45))
-				.quantity(4)
+				.sku("britannia")
+				.title("Biskfarm Marie")
+				.price(BigDecimal.valueOf(40.56))
+				.quantity(7)
 				.build();
 
 		ProductEntity savedProductEntity = productRepository.save(productEntity);
 		System.out.println(savedProductEntity);
 	}
+
+    @Test
+    void getProductsLessThanAmount(){
+        List<ProductEntity> entities = productRepository.findByPriceLessThanAndTitleContainingIgnoreCase(15,"Pa");
+        System.out.println("Raw entities :::"+entities);
+        List<Integer> quants = entities.stream()
+                        .map(ProductEntity::getQuantity)
+                        .filter(count->count>2).toList();
+        System.out.println(quants);
+    }
+
+    /**
+     *
 
 	@Test
 	void getRepository() {
@@ -49,5 +62,6 @@ class JpaTutorialApplicationTests {
 				.findByTitleAndPrice("Peps", BigDecimal.valueOf(14.4));
 		productEntity.ifPresent(System.out::println);
 	}
-
+     */
 }
+
