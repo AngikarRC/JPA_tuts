@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +17,9 @@ class JpaTutorialApplicationTests {
 
 	@Autowired
 	ProductRepository productRepository;
+    private LocalDateTime LocalDateTime;
 
-	@Test
+    @Test
 	void contextLoads() {
 	}
 
@@ -44,24 +46,24 @@ class JpaTutorialApplicationTests {
         System.out.println(quants);
     }
 
-    /**
-     *
+
 
 	@Test
 	void getRepository() {
-//		List<ProductEntity> entities = productRepository.findByCreatedAtAfter(
-//				LocalDateTime.of(2025, 1, 1, 0, 0, 0 ));
-//		List<ProductEntity> entities = productRepository.findByQuantityGreaterThanOrPriceLessThan(4, BigDecimal.valueOf(23.45));
-		List<ProductEntity> entities = productRepository.findByTitleContainingIgnoreCase("CHOco", null);
-		System.out.println(entities);
+		List<ProductEntity> entities = productRepository.findByCreatedAtAfterOrderByTitle(
+				LocalDateTime.of(2025, 1, 1, 0, 0, 0 ));
+		List<ProductEntity> entities1 = productRepository.findByQuantityGreaterThanOrPriceLessThan(4, BigDecimal.valueOf(23.45));
+		List<ProductEntity> entities2 = productRepository.findByTitleContainingIgnoreCase("CHOco", null);
+		System.out.println("---->"+entities);
 	}
 
 	@Test
 	void getSingleFromRepository() {
 		Optional<ProductEntity> productEntity = productRepository
-				.findByTitleAndPrice("Peps", BigDecimal.valueOf(14.4));
+				.findByTitleAndPrice("KitKat", BigDecimal.valueOf(13.7));
+        System.out.println(" Get Single Product from Repo");
 		productEntity.ifPresent(System.out::println);
 	}
-     */
+
 }
 

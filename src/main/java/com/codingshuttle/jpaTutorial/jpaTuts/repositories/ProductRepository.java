@@ -25,11 +25,14 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findByTitleContainingIgnoreCase(String title,  Pageable pageable);
 
-//    Optional<ProductEntity> findByTitleAndPrice(String title, BigDecimal price);
-
+    //returns only 1 entity
+    Optional<ProductEntity> findByTitleAndPrice(String title, BigDecimal price);
+    /**
     @Query("select e.title, e.price from ProductEntity e where e.title=:title and e.price=:price")
     Optional<ProductEntity> findByTitleAndPrice(String title, BigDecimal price);
+    */
 
+    List<ProductEntity> findByTitleStartingWithIgnoreCaseOrTitleStartingWithIgnoreCase(String title1,String title2, Pageable pageable);
 
     List<ProductEntity> findByPriceLessThanAndTitleContainingIgnoreCase(int cost,String title);
 }

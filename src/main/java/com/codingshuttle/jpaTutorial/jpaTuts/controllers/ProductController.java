@@ -53,5 +53,17 @@ public class ProductController {
 //        return productRepository.findAll(pageable).getContent();
 
     }
+    @GetMapping("/starting-with")
+    public List<ProductEntity> fetchByTitlesStarting(
+            @RequestParam String title1,
+            @RequestParam String title2,
+            @RequestParam Integer pageNumber
+    ){
+            return productRepository.findByTitleStartingWithIgnoreCaseOrTitleStartingWithIgnoreCase(
+                    title1,
+                    title2,
+                    PageRequest.of(pageNumber, PAGE_SIZE , Sort.by("title").descending())
+            );
+    }
 
 }
