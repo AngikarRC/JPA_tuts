@@ -53,6 +53,14 @@ public class ProductController {
 //        return productRepository.findAll(pageable).getContent();
 
     }
+
+    /**
+     *
+     * @param title1
+     * @param title2
+     * @param pageNumber
+     * @return
+
     @GetMapping("/starting-with")
     public List<ProductEntity> fetchByTitlesStarting(
             @RequestParam String title1,
@@ -65,5 +73,25 @@ public class ProductController {
                     PageRequest.of(pageNumber, PAGE_SIZE , Sort.by("title").descending())
             );
     }
+     */
+
+    @GetMapping("/starting-with-page")
+    public Page<ProductEntity> fetchByTitlesStartingPage(
+            @RequestParam String title1,
+            @RequestParam String title2,
+            @RequestParam Integer pageNumber
+    ){
+        Page<ProductEntity> page =  productRepository.findByTitleStartingWithIgnoreCaseOrTitleStartingWithIgnoreCase(
+                title1,
+                title2,
+                PageRequest.of(pageNumber, PAGE_SIZE , Sort.by("title").descending())
+        );
+
+        List<ProductEntity> returnedEntities = page.getContent();
+        System.out.println("Returned contents from page number : "+page.getNumber() + "\n" + returnedEntities);
+
+        return page;
+    }
+
 
 }
